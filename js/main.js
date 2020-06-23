@@ -1,3 +1,15 @@
+function Hero(game, x, y) {
+    // call Phaser.Sprite constructor
+    Phaser.Sprite.call(this, game, x, y, 'hero');
+    // sets the central point of the character
+    this.anchor.set(0.5, 0.5);
+}
+
+// inherit from Phaser.Sprite
+Hero.prototype = Object.create(Phaser.Sprite.prototype);
+Hero.prototype.constructor = Hero;
+
+
 PlayState = {};
 
 // load game assets
@@ -14,6 +26,7 @@ PlayState.preload = function() {
   this.game.load.image('grass:4x1', 'images/grass_4x1.png');
   this.game.load.image('grass:2x1', 'images/grass_2x1.png');
   this.game.load.image('grass:1x1', 'images/grass_1x1.png');
+  this.game.load.image('hero', 'images/hero_stopped.png');
 };
 
 PlayState._spawnPlatform = function (platform) {
@@ -21,10 +34,17 @@ PlayState._spawnPlatform = function (platform) {
     this.game.add.sprite(platform.x, platform.y, platform.image);
 };
 
+PlayState._spawnCharacters = function (data) {
+    // spawn hero
+    this.hero = new Hero(this.game, data.hero.x, data.hero.y);
+    this.game.add.existing(this.hero);
+};
+
 PlayState._loadLevel = function (data) {
   // spawn all platforms
   // iterate over the platforms array
   data.platforms.forEach(this._spawnPlatform, this);
+  this._spawnCharacters({hero: data.hero});
 };
 
 // create game entities and set up world here
