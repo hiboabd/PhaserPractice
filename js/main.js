@@ -51,8 +51,15 @@ PlayState.preload = function() {
 };
 
 PlayState._spawnPlatform = function (platform) {
-  // whilst it's being iterated, add new sprites to the game world
-    this.game.add.sprite(platform.x, platform.y, platform.image);
+  // Phaser.Group.create is a factory method for sprites. The new sprite will be added as a child of the group.
+  let sprite = this.platforms.create(
+    platform.x, platform.y, platform.image);
+
+    this.game.physics.enable(sprite);
+    // disables gravity for all platforms
+    sprite.body.allowGravity = false;
+    // prevents platforms from being moved when collided with
+    sprite.body.immovable = true;
 };
 
 PlayState._spawnCharacters = function (data) {
@@ -62,6 +69,9 @@ PlayState._spawnCharacters = function (data) {
 };
 
 PlayState._loadLevel = function (data) {
+  //create all the group/layers that we need
+  this.platforms = this.game.add.group();
+
   // spawn all platforms
   // iterate over the platforms array
   data.platforms.forEach(this._spawnPlatform, this);
@@ -79,8 +89,13 @@ PlayState.create = function() {
 }
 
 PlayState.update = function() {
+  this._handleCollisions();
   this._handleInput();
-}
+};
+
+PlayState._handleCollisions = function() {
+  this.game.physics.arcade.collide(this.hero, this.platforms);
+};
 
 PlayState._handleInput = function () {
     if (this.keys.left.isDown) { // move hero left
