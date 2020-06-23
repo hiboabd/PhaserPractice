@@ -66,6 +66,9 @@ PlayState._loadLevel = function (data) {
   // iterate over the platforms array
   data.platforms.forEach(this._spawnPlatform, this);
   this._spawnCharacters({hero: data.hero});
+  // enables gravity
+  const GRAVITY = 1200;
+  this.game.physics.arcade.gravity.y = GRAVITY;
 };
 
 // create game entities and set up world here
