@@ -1,0 +1,26 @@
+{
+  "name": "phaserpractice",
+  "version": "1.0.0",
+  "description": "Install dependencies ``` npm install ``` Start the server  ``` http server ``` Navigate to http://localhost:8080",
+  "main": "sum.js",
+  "dependencies": {
+    "http-server": "^0.12.3",
+    "jest": "^26.0.1",
+    "phaser": "^3.23.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiboabd/PhaserPractice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiboabd/PhaserPractice/issues"
+  },
+  "homepage": "https://github.com/hiboabd/PhaserPractice#readme"
+
+}
