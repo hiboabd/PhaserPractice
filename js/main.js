@@ -3,6 +3,10 @@ function Hero(game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'hero');
     // sets the central point of the character
     this.anchor.set(0.5, 0.5);
+    // ceate a body for the character by enabling physics
+    this.game.physics.enable(this);
+    // prevent the main character to move outside the bounds of the screen
+    this.body.collideWorldBounds = true;
 }
 
 // inherit from Phaser.Sprite
@@ -12,7 +16,8 @@ Hero.prototype.constructor = Hero;
 // add this method –and the ongoing Hero methods– AFTER these lines, or you
 // will override them when cloning the Phaser.Sprite prototype
 Hero.prototype.move = function(direction) {
-  this.x += direction * 2.5; //2.5 pizels each frame
+  const SPEED = 200;
+  this.body.velocity.x = direction * SPEED;
 }
 
 
@@ -80,6 +85,9 @@ PlayState._handleInput = function () {
     }
     else if (this.keys.right.isDown) { // move hero right
         this.hero.move(1);
+    }
+    else {
+      this.hero.move(0);
     }
 };
 
